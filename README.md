@@ -1,72 +1,68 @@
-## StudentToken Smart Contract
 
-### Overview
+# DegenToken Smart Contract
 
-An Ethereum blockchain-based ERC20 token implementation is the `StudentToken} contract. It also has other features like minting, burning, and redeeming tokens for different kinds of cards. The agreement makes use of OpenZeppelin's libraries to guarantee uniformity and security.
+## Overview
 
-###  Features of the contract
+An ERC20 token implementation for a student reward scheme is the `DegenToken} smart contract. The contract permits the minting, burning, and redemption of tokens for extracurricular and academic points. Additionally, it supports event management, in which students can participate in events and earn tokens for doing certain tasks.
 
-1. **Token Initialization**:
-   - The name "Student" and the symbol "STU" are used to initialize the contract.
-    - The owner is designated as the deployer.
+## Features
 
-2. **Token purchasing**:
-   - By adding their purchasing information to a queue, users can buy tokens.
+- **ERC20 Token**: Typical token features, including the ability to manufacture, burn, and transfer tokens.
+- **Student Registration**: Token redemption and activity participation are restricted to enrolled students.
+- **Redeeming Tokens**: Pupils can exchange tokens for extracurricular and academic points.
+- **Event Management**: The administrator may set up activities that grant tokens and extra credit to students.
+- **Study and Game Awards**: Points awarded for finishing studies and taking part in games.
+- **Bonus Credits**: The administrator has the authority to award extracurricular and academic bonuses.
 
-3. **Token Minting**:
-   -Every buyer in line can have tokens minted for them by the contract owner.
+## Contract Structure
 
-4. **Token Transfer**:
-   - Users have the ability to send tokens to different addresses.
-   - The ERC20 standard's `transfer`, `transferFrom`, and `approve} methods are superseded by the contract.
+### `DegenToken`
 
-5. **Token Burning**:
-   - Tokens can be burned by users to redeem different kinds of cards.
-    - Tokens from any account can be burned by the owner.
+- **Inheritance**: Inherits from `ERC20`, `Ownable`, and `ERC20Burnable` contracts.
+- **Events**:
+  - `TokensMinted(address indexed to, uint256 amount)`
+  - `TokensRedeemed(address indexed from, uint256 amount, uint256 mathCredit, uint256 scienceCredit, uint256 historyCredit, uint256 literatureCredit, uint256 extraCurricularPoints)`
+  - `EventCreated(uint256 eventId, string eventName, uint256 tokensRewarded, uint256 extraCurricularPointsRewarded)`
+  - `EventAttended(address indexed student, uint256 eventId, uint256 tokensEarned)`
+  - `StudyCompleted(address indexed student, uint256 tokensEarned)`
+  - `GamePlayed(address indexed student, uint256 tokensEarned, uint256 extraCurricularPointsEarned)`
+  - `StudentRegistered(address indexed student)`
+  - `BonusCreditsGranted(address indexed student, uint256 mathCredit, uint256 scienceCredit, uint256 historyCredit, uint256 literatureCredit, uint256 extraCurricularPoints)`
 
-6. **Card Redemption**:
-    -Tokens can be exchanged for Common, Uncommon, Rare, Epic, and Legendary cards, among other card types.
-    - There is a token cost associated with each sort of card.
+### Functions
 
-7. **Balance Check**:
-   -Users are able to view the balance of their tokens.
+- **Registration**:
+  - {registerStudent(address student)}: Add a new pupil to the roll.
+  - {onlyRegistered}: A modifier to guarantee that specific functions can only be called by registered students.
 
+**Token Management**: - {mint(address to, uint256 amount)}: Mint new tokens.
+  Redeem tokens for credits and points using the formula {redeemTokens(uint256 amount, uint256 mathCredit, uint256 scienceCredit, uint256 historyCredit, uint256 literatureCredit, uint256 extraCurricularPoints)}.
 
-### Usage
+**Event Management**: - {createEvent(string memory name, uint256 tokensRewarded, uint256 extraCurricularPointsRewarded)}: Generate a new event.
+  - {attendEvent(uint256 eventId)}: Participate in an event to receive incentives.
 
-1. **Deploying the Contract**:
-    - The contract deployer is set as the initial owner.
-    - Use a Solidity-compatible environment such as Remix to deploy the contract.
+**Rewards**: Tokens are awarded for finishing studies when you {completeStudy(address student, uint256 tokensEarned)}.
+  Give tokens and points to students who play games by using the `playGame(address student, uint256 tokensEarned, uint256 extraCurricularPointsEarned)} function.
+  * {grantBonusCredits(address student, uint256 extraCurricularPoints, uint256 historyCredit, uint256 scienceCredit, uint256 mathCredit, uint256 literatureCredit)}: Approve extra credit.
 
-2. **Purchasing Tokens**:
-    - Users can call `purchaseTokens` with their address and the amount of tokens they wish to purchase.
+- **Utility**:
+  - `StudentPosition(uint256 marks)`: Determine the student's grade based on marks.
+  - `passOrfail()`: Check if a student has passed based on aggregated marks.
 
-3. **Minting Tokens**:
-    - The owner can call `mintTokens` to mint tokens for all buyers in the queue.
+## Installation
+You can use remix ide, hardhat , truffle , i am using remix ide and after that we will show the transactions on snowtrace testnet by connecting our metamask wallet.
 
-4. **Transferring Tokens**:
-    - Users can transfer tokens using the `transferTokens` function.
-    - Additionally, users can use the standard `transfer` and `transferFrom` functions.
+## Usage
 
-5. **Redeeming Cards**:
-    - Users can redeem tokens for various card types using the `redeemCard` function.
+1. **Deploy the Contract**: Use Remix or Truffle to deploy the `DegenToken` contract to your desired Ethereum network.
+2. **Interact with the Contract**:
+   - Register students using the `registerStudent` function.
+   - Mint tokens and manage events using the available functions.
+   - Redeem tokens for credits and points as needed.
 
-6. **Burning Tokens**:
-    - The owner can burn tokens from any account using the `burnTokens` function.
+## License
 
-7. **Checking Balance**:
-    - Users can check their token balance using the `getTokenBalance` function.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-### Security Considerations
-
-- **OnlyOwner**: Certain functions are restricted to the owner to prevent unauthorized actions.
-- **Require Statements**: Various checks are in place to ensure valid inputs and sufficient balances.
-- **OpenZeppelin Libraries**: The contract uses well-tested and secure implementations from OpenZeppelin to minimize risks.
-
-### License
-
-This project is licensed under the MIT License.
-
-### Author
-
-### DINKY KHURANA
+## Author
+DINKY KHURANA
